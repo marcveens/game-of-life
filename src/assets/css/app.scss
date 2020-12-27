@@ -1,0 +1,75 @@
+html {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+main {
+    padding: 20px;
+}
+
+.sudoku-grid {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    flex-wrap: wrap;
+
+    &__cell {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: (100% / 9);
+        height: (100% / 9);
+        border: 1px solid #333;
+        border-width: 0 1px 1px 0;
+        color: red;
+
+        &:nth-child(9n + 1) {
+            border-left-width: 3px;
+        }
+
+        &:nth-child(-n + 9) {
+            border-top-width: 3px;
+        }
+
+        &:nth-child(3n) {
+            border-right-width: 3px;
+        }
+
+        &:nth-last-child(-n + 9),
+        &:nth-child(n + 19):nth-child(-n + 27),
+        &:nth-child(n + 46):nth-child(-n + 54) {
+            border-bottom-width: 3px;
+        }
+
+        &--static {
+            font-weight: bold;
+            color: #000;
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            text-align: center;
+            font-weight: inherit;
+            font-size: inherit;
+        }
+    }
+
+    &__error {
+        margin-top: 20px;
+        color: red;
+    }
+}
