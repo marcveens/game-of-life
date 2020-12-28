@@ -4,99 +4,20 @@ export type Cell = {
 };
 
 export class GameOfLife {
-    private livingCells: Cell[] = [
-        {
-            x: 10,
-            y: 10
-        },
-        {
-            x: 11,
-            y: 10
-        },
-        {
-            x: 12,
-            y: 10
-        },
-        {
-            x: 10,
-            y: 11
-        },
-        {
-            x: 12,
-            y: 11
-        },
-        {
-            x: 10,
-            y: 12
-        },
-        {
-            x: 11,
-            y: 12
-        },
-        {
-            x: 12,
-            y: 12
-        },
-        {
-            x: 10,
-            y: 13
-        },
-        {
-            x: 11,
-            y: 13
-        },
-        {
-            x: 12,
-            y: 13
-        },
-        {
-            x: 10,
-            y: 14
-        },
-        {
-            x: 11,
-            y: 14
-        },
-        {
-            x: 12,
-            y: 14
-        },
-        {
-            x: 10,
-            y: 15
-        },
-        {
-            x: 11,
-            y: 15
-        },
-        {
-            x: 12,
-            y: 15
-        },
-        {
-            x: 10,
-            y: 16
-        },
-        {
-            x: 12,
-            y: 16
-        },
-        {
-            x: 10,
-            y: 17
-        },
-        {
-            x: 11,
-            y: 17
-        },
-        {
-            x: 12,
-            y: 17
-        }
-    ];
+    private livingCells: Cell[] = [];
 
     public setCells(cells: Cell[]) {
         this.livingCells = cells;
+    }
+
+    public toggleCell(cell: Cell) {
+        const index = this.livingCells.findIndex(l => l.x === cell.x && l.y === cell.y);
+
+        if (index > -1) {
+            this.livingCells.splice(index, 1);
+        } else {
+            this.livingCells.push(cell);
+        }
     }
 
     public getLivingCells() {
