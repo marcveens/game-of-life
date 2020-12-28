@@ -6,7 +6,9 @@ import { Cell, GameOfLife as GameOfLifeMachine } from './GameOfLife';
 })
 export class GameOfLife {
     @State() playing: boolean;
-    @State() playSpeed: number = 400;
+    @State() playSpeed: number = 300;
+    @State() iterations: number = 0;
+    @State() visibilityChanged: boolean = false;
 
     private ctx: CanvasRenderingContext2D;
     private machine: GameOfLifeMachine;
@@ -17,17 +19,27 @@ export class GameOfLife {
     private cellSize = 20;
     private pixelShifter = .5; // http://diveintohtml5.info/canvas.html
     private doublePixelShifter = this.pixelShifter * 2;
-    private strokeColor = '#666';
+    private strokeColor = '#444';
     private cellColor = '#F00';
 
     componentDidLoad() {
         this.machine = new GameOfLifeMachine();
         this.drawGrid();
         this.drawCells(this.machine.getLivingCells());
+
+        window.addEventListener('visibilitychange', this.onVisibilityChange.bind(this));
     }
 
     disconnectedCallback() {
         clearInterval(this.playInterval);
+
+        window.removeEventListener('visibilitychange', this.onVisibilityChange.bind(this));
+    }
+
+    onVisibilityChange() {
+        if (document.visibilityState === 'hidden') {
+            this.pause();
+        }
     }
 
     drawGrid() {
@@ -76,40 +88,48 @@ export class GameOfLife {
 
     nextStep() {
         this.machine.nextStep();
-        this.clearGrid();
+        this.redrawGrid();
         this.drawCells(this.machine.getLivingCells());
+        this.iterations = this.iterations + 1;
     }
 
     play() {
-        this.playing = !this.playing;
+        this.playing = true;
         this.playInterval = setInterval(() => {
             this.nextStep();
         }, this.playSpeed);
     }
 
     pause() {
-        this.playing = !this.playing;
+        this.playing = false;
         clearInterval(this.playInterval);
     }
 
-    clearGrid() {
+    redrawGrid() {
         this.ctx.clearRect(0, 0, this.width, this.height);
         this.drawGrid();
+    }
+
+    clearGrid() {
+        clearInterval(this.playInterval);
+        this.redrawGrid();
     }
 
     render() {
         return (
             <Fragment>
-                <canvas id="grid" />
                 <div>
                     {this.playing ? (
                         <button onClick={() => this.pause()}>Pause</button>
                     ) : (
-                        <button onClick={() => this.play()}>Play</button>
-                    )}
+                            <button onClick={() => this.play()}>Play</button>
+                        )}
                     <button onClick={() => this.nextStep()} disabled={this.playing}>Next step</button>
                     <button onClick={() => this.clearGrid()} disabled={this.playing}>Clear</button>
+                    <span>&nbsp;&nbsp;Iterations: {this.iterations}</span>
                 </div>
+                <br />
+                <canvas id="grid" />
             </Fragment>
         );
     }
