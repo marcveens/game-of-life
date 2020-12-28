@@ -1,0 +1,1 @@
+import{p as i,b as p}from"./p-56844d63.js";(()=>{const p=import.meta.url,a={};return""!==p&&(a.resourcesUrl=new URL(".",p).href),i(a)})().then((i=>p([["p-881fae8f",[[0,"app-root"],[0,"game-of-life",{playing:[32],playSpeed:[32],iterations:[32],visibilityChanged:[32],tick:[32]}]]]],i)));
