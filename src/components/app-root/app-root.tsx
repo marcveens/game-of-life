@@ -8,7 +8,7 @@ export class AppRoot {
         return (
             <div>
                 <main>
-                    Hey you
+                    <game-of-life />
                 </main>
             </div>
         );

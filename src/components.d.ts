@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AppRoot {
     }
+    interface GameOfLife {
+    }
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -16,15 +18,25 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLGameOfLifeElement extends Components.GameOfLife, HTMLStencilElement {
+    }
+    var HTMLGameOfLifeElement: {
+        prototype: HTMLGameOfLifeElement;
+        new (): HTMLGameOfLifeElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
+        "game-of-life": HTMLGameOfLifeElement;
     }
 }
 declare namespace LocalJSX {
     interface AppRoot {
     }
+    interface GameOfLife {
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
+        "game-of-life": GameOfLife;
     }
 }
 export { LocalJSX as JSX };
@@ -32,6 +44,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "game-of-life": LocalJSX.GameOfLife & JSXBase.HTMLAttributes<HTMLGameOfLifeElement>;
         }
     }
 }
